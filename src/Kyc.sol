@@ -138,4 +138,9 @@ contract Kyc {
         string memory data = customers[_name].data;
         return data;
     }
+
+function getKycStatus(string memory _userName) public view returns (bool) {
+        bool check = customers[_userName].kycChecked;
+        return check;
+    }
 }
