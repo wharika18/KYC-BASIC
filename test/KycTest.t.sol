@@ -35,4 +35,25 @@ contract KycTest is Test {
         kyc.addCustomer(John, aaa);
         assertEq(kyc.getCustData(John), aaa);
     }
+function testKycFalse() public {
+        vm.prank(admin); 
+
+        kyc.addBank(boi, bank, 1);
+        vm.prank(admin);
+        kyc.addBank(boc, bank1, 2);
+        vm.prank(admin);
+        kyc.addBank(bob, bank2, 3);
+        vm.prank(bank);
+        kyc.addCustomer(John, aaa);
+        vm.prank(bank);
+        kyc.upVote(John);
+        vm.stopPrank();
+        vm.prank(bank1);
+        kyc.downVote(John);
+        vm.stopPrank();
+        vm.prank(bank2);
+        kyc.downVote(John);
+        kyc.kycStatus(John);
+        assertEq(kyc.getKycStatus(John), false);
+    }
 }
